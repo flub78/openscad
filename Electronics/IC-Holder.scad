@@ -2,7 +2,7 @@
  * Soporte para almacenar circuitos integrados.
  *
  * @author  Joaquín Fernández
- * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Electr%C3%B3nica/IC-Holder.scad
+ * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Electronics/IC-Holder.scad
  * @license CC
  *
  ***********************************************
