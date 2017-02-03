@@ -19,27 +19,42 @@
  *    |__|-w2-|__|
  */
 function roundToLayerHeight(value) = ceil(value / lh) * lh;
+
+// Dimensiones de los diferentes tipos de ICs.
+types = [
+    // Nombre      h1   h2    w1   w2
+    [ "DIP4",      4.5, 4.5,  9.5, 6.0 ],
+    [ "DIPSwitch", 7.8, 3.9, 10.5, 6.6 ]
+];
+//------------------------------------------
+// Variables configurables.
+//------------------------------------------
+// Tipo seleccionado, usado para obtener las medidas.
+type = 0;
 // Layer Height
 lh = 0.3;
+// Cantidad de soportes
+n = 3;
 // Altura.
-l  = roundToLayerHeight(48);
-// Altura del cuerpo del IC
-h1 = roundToLayerHeight(4.5);
-// Altura de las patas del IC
-h2 = roundToLayerHeight(4.5);
-// Anchura externa
-w1 = roundToLayerHeight(9.5);
-// Anchura interna.
-w2 = roundToLayerHeight(w1 - 3.5);
+l = roundToLayerHeight(51);
 // Diámetro del pin, M3 por defecto.
-d  = 3;
+d = 3;
 // Grosor de las paredes
-f  = 4 * lh;
+f = 4 * lh;
 // Indica si se agregan las ranuras en la parte superior
 addSlots = true;
-//---------------------------------
-// Calculamos las rutas a dibujar.
-//---------------------------------
+//------------------------------------------
+// Variables calculadas a partir del tipo.
+//------------------------------------------
+// Altura del cuerpo del IC
+h1 = roundToLayerHeight(types[type][1]);
+// Altura de las patas del IC
+h2 = roundToLayerHeight(types[type][2]);
+// Anchura externa
+w1 = roundToLayerHeight(types[type][3]);
+// Anchura interna.
+w2 = roundToLayerHeight(types[type][4]);
+// Ruta a dibujar.
 path = [
     [ - w1 / 2, - h2 ],
     [ - w1 / 2,   h1 ],
@@ -84,7 +99,7 @@ module holder()
             {
                 translate([ 0, 0, (sl - f) * i + f ])
                 {
-                    slot(sl - (slots == 1 ? 3 * f : 1.5 * f));
+                    slot(sl - (slots == 1 ? 3 * f : 2 * f));
                 }
             }
         }
@@ -155,6 +170,12 @@ module slot(length)
 }
 //---------------------------------------------------
 $fn = 50;
-holder();
+for (x = [ 0 : n - 1 ])
+{
+    translate([ x * (w1 + f), 0, 0 ])
+    {
+        holder();
+    }
+}
 // Quitamos 2 layerHeights para tener holgura.
-//pin(- 2 * lh);
+//pin(- 3 * lh);
