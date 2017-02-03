@@ -178,4 +178,4 @@ for (x = [ 0 : n - 1 ])
     }
 }
 // Quitamos 2 layerHeights para tener holgura.
-//pin(- 3 * lh);
+//pin(- 2 * lh);
