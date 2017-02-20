@@ -5,8 +5,9 @@
  * bolígrafos, pinceles, etc..
  *
  * @author  Joaquín Fernández
- * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Tools/DrillHolder.scad
+ * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Storage/DrillHolder.scad
  * @license CC-BY-NC-4.0
+ * @see     http://www.thingiverse.com/thing:2095807
  */
 use <../Functions/flatten.scad>
 use <../Functions/ceilMultiple.scad>
@@ -172,3 +173,5 @@ else
         1.5 * lh
     );
 }
+// 51.0 x 139.8 x 17.1
+// 50.4 x 140.4 x 17.1
