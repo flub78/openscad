@@ -3,7 +3,8 @@
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Electronics/IC-Holder.scad
- * @license CC
+ * @license CC-BY-NC-4.0
+ * @see     http://www.thingiverse.com/thing:2071264
  */
 use <../Functions/ceilMultiple.scad>
 /*
@@ -20,10 +21,11 @@ use <../Functions/ceilMultiple.scad>
  */
 types = [
     // Nombre             h1   h2    w1   w2
-    [ "DIP4",             3.9, 3.9,  8.3, 7.2 ],
-    [ "DIPSwitch",        7.0, 3.3, 10.0, 8.0 ],
-    [ "DPDT6Pin-7x7x12", 13.0, 3.6,  7.0, 4.7 ],
-    [ "BarDisplay",       7.8, 7.8, 25.6, 1.8 ]
+    [ "DIP4",             3.9, 4.2,  7.8, 7.2 ], // 0
+    [ "DIPSwitch",        7.0, 3.3, 10.0, 8.0 ], // 1
+    [ "DPDT4Pin-6x6x4",   4.5, 3.6,  7.5, 6.3 ], // 2
+    [ "DPDT6Pin-7x7x12", 13.0, 3.6,  7.0, 4.7 ], // 3
+    [ "BarDisplay",       7.8, 7.8, 25.6, 1.8 ]  // 4
 ];
 //------------------------------------------
 // Variables configurables.
@@ -36,7 +38,7 @@ lh = 0.3;
 // Cantidad de soportes
 n = 1;
 // Altura.
-l = ceilMultiple(45, lh);
+l = ceilMultiple(45, lh);//w37xl52xh45
 // Diámetro del pin, M3 por defecto.
 d = 3;
 // Grosor de las paredes
