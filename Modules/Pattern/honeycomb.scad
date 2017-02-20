@@ -2,7 +2,7 @@
  * Módulo que permite trabajar con patrones hexagonales tipo panal.
  *
  * @author  Joaquín Fernández
- * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Modules/honeycomb.scad
+ * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Modules/Pattern/honeycomb.scad
  * @license CC-BY-NC-4.0
  * @see     http://www.thingiverse.com/thing:2124344
  */
