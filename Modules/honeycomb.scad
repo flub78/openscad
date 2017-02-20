@@ -1,9 +1,10 @@
 /**
- * Módulo que permite trabajar con patrones tipo panal.
+ * Módulo que permite trabajar con patrones hexagonales tipo panal.
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Modules/honeycomb.scad
  * @license CC-BY-NC-4.0
+ * @see     http://www.thingiverse.com/thing:2124344
  */
 /**
  * Dibuja un panal de miel completo.
@@ -16,10 +17,10 @@
  */
 module honeycomb(columns, rows, height, size, thickness)
 {
-    halfSize = size / 2;
+    _halfSize = size / 2;
     for (_row = [ 0 : rows - 1 ]) 
     {
-        translate([ (_row % 2) * halfSize, _row * halfSize * sqrt(3), 0 ])
+        translate([ (_row % 2) * _halfSize, _row * _halfSize * sqrt(3), 0 ])
         {
             for (_column = [0 : columns - 1]) 
             {
