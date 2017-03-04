@@ -4,10 +4,10 @@
  * Ejemplo:
  *
  * in = [ 1, 2, 3, 4 ];
- * echo(vectorSum(in, 0)); // 1
- * echo(vectorSum(in, 1)); // 3
- * echo(vectorSum(in, 2)); // 6
- * echo(vectorSum(in, 3)); // 10
+ * echo(arraySum(in, 0)); // 1
+ * echo(arraySum(in, 1)); // 3
+ * echo(arraySum(in, 2)); // 6
+ * echo(arraySum(in, 3)); // 10
  *
  * @param {Array}  array   Array multidimensional a usar para obtener los valores.
  * @param {Number} index   Índice del array a partir del cual empezar a sumar.
