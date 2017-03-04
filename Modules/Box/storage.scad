@@ -3,6 +3,7 @@
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Modules/Box/storage.scad
+ * @see     http://www.thingiverse.com/thing:2152853
  * @license CC-BY-NC-4.0
  */
 //--------------------------------------------------------------------------
