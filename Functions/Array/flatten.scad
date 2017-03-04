@@ -5,8 +5,8 @@
  * Ejemplo:
  *
  * in = [ [ 0, 1 ], [ 2, 3 ] ];
- * echo(flatten(in, 0)); // [ 0, 2 ]
- * echo(flatten(in, 1)); // [ 1, 3 ]
+ * echo(arrayFlatten(in, 0)); // [ 0, 2 ]
+ * echo(arrayFlatten(in, 1)); // [ 1, 3 ]
  *
  * @param {Array}  array Array multidimensional a usar para obtener los valores.
  * @param {Number} column Columna de los subarray para extraer sus valores.
@@ -16,8 +16,8 @@
  *
  * @author  Joaquín Fernández
  * @license CC-BY-NC-4.0
- * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Functions/flatten.scad
+ * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Functions/Array/flatten.scad
  */
-function flatten(array, column = 0, row = 0, output = []) = row > 0
-    ? flatten(array, column, row - 1, concat(output, [ array[row][column] ]))
+function arrayFlatten(array, column = 0, row = 0, output = []) = row > 0
+    ? arrayFlatten(array, column, row - 1, concat(output, [ array[row][column] ]))
     : concat(output, [ array[row][column] ]);

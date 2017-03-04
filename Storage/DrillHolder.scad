@@ -9,7 +9,7 @@
  * @license CC-BY-NC-4.0
  * @see     http://www.thingiverse.com/thing:2095807
  */
-use <../Functions/flatten.scad>
+use <../Functions/Array/flatten.scad>
 use <../Functions/ceilMultiple.scad>
 use <../Modules/Box/hollow.scad>
 //-----------------------------------------------------------------------
@@ -21,7 +21,7 @@ lh = 0.3;
 // Indica si se agrega la muesca para sacar las brocas más fácilmente.
 cut = true;
 // Indica si se muestra la tapa o la caja.
-showBox = 0;
+showBox = 1;
 // Dimensiones de las brocas: [0]: Diámetro, [1]: Largo
 // Si se quiere holgura, tomar en cuenta a la hora de asignar los valores.
 // Se pueden poner en cualquier orden pero si se ponen de mayor a menor
@@ -41,7 +41,7 @@ function offsetX(i, total = 0, thickness = 0) = i > 0
     ? offsetX(i - 1, total + sizes[i - 1][0] + thickness + d, thickness)
     : total + thickness;
 
-function flatSizes(idx = 0, i = len(sizes) - 1, arr = []) = flatten(sizes, idx, i, arr);
+function flatSizes(idx = 0, i = len(sizes) - 1, arr = []) = arrayFlatten(sizes, idx, i, arr);
 
 // Grosor de las paredes.
 b  = ceilMultiple(1.2, lh);
