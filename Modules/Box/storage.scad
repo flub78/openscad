@@ -15,6 +15,13 @@ use <./rounded.scad>
 function calcTranslation(side, percents, index, thickness) = thickness
       + arraySum(percents, index - 1) * side
       + percents[index] * side / 2;
+
+function toArray(value) = value[0] == undef
+    ? value == 0
+        ? []
+        : arrayFill(value, 1 / value)
+    : value;
+  
 //--------------------------------------------------------------------------
 /**
  * Dibujar un bloque con huecos.
@@ -35,63 +42,70 @@ function calcTranslation(side, percents, index, thickness) = thickness
  */
 module boxStorage(width, height, length, radius, thickness, rows, cols)
 {
-    _rows    = rows[0] == undef ? arrayFill(rows, 1 / rows) : rows;
-    _cols    = cols[0] == undef ? arrayFill(cols, 1 / cols) : cols;
+    _rows    = toArray(rows);
+    _cols    = toArray(cols);
     _numRows = len(_rows);
     _numCols = len(_cols);
-    _height  = height - thickness * (_numCols + 1);
-    _width   = width  - thickness * (_numRows + 1);
-    if (abs(arraySum(_rows, _numRows) - 1) > 1e9)
+    if (_numCols > 0 && _numRows > 0)
     {
-        utilsMessageError("ERROR(boxStorage): SUM(rows) != 1.0");
-    }
-    if (abs(arraySum(_cols, _numCols) - 1) > 1e9)
-    {
-        utilsMessageError("ERROR(boxStorage): SUM(cols) != 1.0");
-    }
-    difference()
-    {
-        boxRounded(width, height, length, abs(radius));
-        translate([ (thickness - width) / 2, (thickness - height) / 2, thickness ])
+        _height  = height - thickness * (_numCols + 1);
+        _width   = width  - thickness * (_numRows + 1);
+        if (abs(arraySum(_rows, _numRows) - 1) > 1e9)
         {
-            for (y = [ 1 : _numCols ])
+            utilsMessageError("ERROR(boxStorage): SUM(rows) != 1.0");
+        }
+        if (abs(arraySum(_cols, _numCols) - 1) > 1e9)
+        {
+            utilsMessageError("ERROR(boxStorage): SUM(cols) != 1.0");
+        }
+        difference()
+        {
+            boxRounded(width, height, length, abs(radius));
+            translate([ (thickness - width) / 2, (thickness - height) / 2, thickness ])
             {
-                for (x = [ 1 : _numRows ])
+                for (y = [ 1 : _numCols ])
                 {
-                    translate([
-                        calcTranslation(
-                            _width,
-                            _rows,
-                            x - 1,
-                            (x - 0.5) * thickness
-                        ),
-                        calcTranslation(
-                            _height,
-                            _cols,
-                            y - 1,
-                            (y - 0.5) * thickness
-                        ),
-                        0
-                    ])
+                    for (x = [ 1 : _numRows ])
                     {
-                        boxRounded(
-                            _rows[x - 1] * _width,
-                            _cols[y - 1] * _height,
-                            length,
-                            radius > 0
-                                ? [
-                                    x == 1        && y == 1        ? radius : 0,
-                                    x == _numRows && y == 1        ? radius : 0,
-                                    x == 1        && y == _numCols ? radius : 0,
-                                    x == _numRows && y == _numCols ? radius : 0
-                                ]
-                                : radius < 0
-                                    ? -radius
-                                    : 0
-                        );
+                        translate([
+                            calcTranslation(
+                                _width,
+                                _rows,
+                                x - 1,
+                                (x - 0.5) * thickness
+                            ),
+                            calcTranslation(
+                                _height,
+                                _cols,
+                                y - 1,
+                                (y - 0.5) * thickness
+                            ),
+                            0
+                        ])
+                        {
+                            boxRounded(
+                                _rows[x - 1] * _width,
+                                _cols[y - 1] * _height,
+                                length,
+                                radius > 0
+                                    ? [
+                                        x == 1        && y == 1        ? radius : 0,
+                                        x == _numRows && y == 1        ? radius : 0,
+                                        x == 1        && y == _numCols ? radius : 0,
+                                        x == _numRows && y == _numCols ? radius : 0
+                                    ]
+                                    : radius < 0
+                                        ? -radius
+                                        : 0
+                            );
+                        }
                     }
                 }
             }
         }
     }
+    else
+    {
+        boxRounded(width, height, length, abs(radius));
+    }        
 }
