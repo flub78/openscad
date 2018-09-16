@@ -1,11 +1,12 @@
 /**
  * Genera topes para usarlos en las mesas de trabajo Wolfcraft
- * aunque pueden ajustarse las medidas para trabajar con 
+ * aunque pueden ajustarse las medidas para trabajar con
  * cualquier marca.
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Tools/WolfcraftStops.scad
  * @license CC-BY-NC-4.0
+ * @see     https://www.thingiverse.com/thing:3103813
  */
 //------------------------------------
 use <../Modules/pinTab.scad>
