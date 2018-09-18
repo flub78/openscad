@@ -6,7 +6,7 @@
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Storage/NintendoMemoryHolder.scad
  * @license CC-BY-NC-4.0
  */
-use <../Functions/floorMultiple.scad>
+use <../Functions/Math/floorMultiple.scad>
 use <../Modules/Box/rounded.scad>
 use <../Modules/Memory/micro-sd.scad>
 use <../Modules/Memory/sd.scad>

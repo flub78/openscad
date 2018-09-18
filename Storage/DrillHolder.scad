@@ -10,7 +10,7 @@
  * @see     http://www.thingiverse.com/thing:2095807
  */
 use <../Functions/Array/flatten.scad>
-use <../Functions/ceilMultiple.scad>
+use <../Functions/Math/ceilMultiple.scad>
 use <../Modules/Box/hollow.scad>
 //-----------------------------------------------------------------------
 // Valores personalizables

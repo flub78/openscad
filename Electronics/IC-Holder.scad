@@ -6,7 +6,7 @@
  * @license CC-BY-NC-4.0
  * @see     http://www.thingiverse.com/thing:2071264
  */
-use <../Functions/ceilMultiple.scad>
+use <../Functions/Math/ceilMultiple.scad>
 /*
  * Dimensiones de los diferentes tipos de ICs.
  *
