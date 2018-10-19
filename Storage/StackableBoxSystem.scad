@@ -8,45 +8,57 @@
  */
 //-----------------------------------------------------------------------------
 sizes = [
- [  58.0, 40.0, 25.0 ], // Tupper blanco
- [ 109.0, 59.1, 34.0 ], // Gavetero plástico
- [  35.0, 16.5, 67.7 ]  // SMINT
+ // ancho largo alto radio dz
+ [  58.0, 40.0, 25.0, 6.5, [ 0.6, 0.4 ] ], // Tupper blanco
+ [ 109.0, 59.1, 34.0, 2.5 ], // Gavetero plástico
+ [  35.0, 16.5, 67.7, 3.5 ]  // SMINT
 ];
 // Índice de las medidas a usar del array `sizes`.
-selected = 1;
-// Ancho del contenedor de las cajas (eje X).
-width = sizes[selected][0];
-// Largo del contenedor de las cajas (eje Y).
-length = sizes[selected][1];
-// Alto del contenedor de las cajas (eje Z).
-height = sizes[selected][2];
+selected = 0;
 // Grosor de las paredes.
 thickness = 1.2;
 // Tolerancia a usar para que el pin entre en las ranuras.
-tolerance = 0.7;
+tolerance = 1.2;
 // Configuración de las celdas de cada caja.
 // Cada celda tiene 2 índices:
 // 0: Divisiones en el eje X.
 // 1: Divisiones en el eje Y.
 cells = [
-    [ [1/3,1/3,1/3], 2 ],
-    [ 4, 2 ],
-    [ 5, 2 ],
+    [ 1, 2 ],
+    [ 1, 2 ],
 ];
-// Radio del pin a usar para poder levantar todas las cajas
-// o ancho en caso de ser rectangular.
-pinSize = width / 8;
-// Radio de los bordes. Posibles valores:
-// - Cero     : No se redondea ningún borde, ni externo ni interno.
-// - Negativo : Todos los bordes se redondean con el radio especificado.
-// - Positivo : Solamente se redondean los bordes externos y los 4 internos.
-radius = 2.5;
 // Índice del elemento que se quiere mostrar o -1 para mostrar todos.
 // Es útil para cuando se quiere imprimir solamente una parte.
 only = -1;
 //-----------------------------------------------------------------------------
+use <../Functions/is.scad>
+use <../Functions/Array/fill.scad>
 use <../Modules/Box/rounded.scad>
 use <../Modules/Box/storage.scad>
+//-----------------------------------------------------------------------------
+// Valores calculados
+//-----------------------------------------------------------------------------
+config = sizes[selected];
+// Cantidad de cajas
+count = len(cells);
+// Ancho del contenedor de las cajas (eje X).
+width = config[0];
+// Largo del contenedor de las cajas (eje Y).
+length = config[1];
+// Alto del contenedor de las cajas (eje Z).
+height = config[2];
+// Radio de los bordes. Posibles valores:
+// - Cero     : No se redondea ningún borde, ni externo ni interno.
+// - Negativo : Todos los bordes se redondean con el radio especificado.
+// - Positivo : Solamente se redondean los bordes externos y los 4 internos.
+radius = config[3];
+// Tamaño de cada caja.
+// Puede ser un array o un entero.
+heights = config[4] == undef
+    ? arrayFill(count, 1 / count)
+    : config[4];
+// Ancho del pin a usar para poder levantar todas las cajas.
+pinSize = width / 6;
 //-----------------------------------------------------------------------------
 /**
  * Devuelve la posición de la bandeja actual.
@@ -227,11 +239,6 @@ module drawTestBox(height)
     }
 }
 //-----------------------------------------------------------------------------
-// Valores calculados
-//-----------------------------------------------------------------------------
-count    = len(cells);
-dz       = height / count;
-//-----------------------------------------------------------------------------
 colors   = [
     [ 0.3, 0.6, 0.9 ],
     [ 0.9, 0.3, 0.6 ],
@@ -249,11 +256,13 @@ if (0)
 }
 else
 {
-    vertical  = 0;
     pinHeight = thickness * 3 + 2 * tolerance;
+    vertical  = 0; // Vertical solamente funciona para cajas de la misma altura.
+    $fa       = 0.01;
     $fs       = 0.01;
     for (z = [ 0 : count - 1 ])
     {
+        dz = heights[z] * height;
         if (only < 0 || only == z)
         {
             translate([
