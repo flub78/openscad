@@ -8,7 +8,7 @@
  * @param increment Incremento a usar para iterar sobre los valores.
  *
  * @author  Joaquín Fernández
- * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Shapes/sinusoid.scad
+ * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Modules/Shapes/sinusoid.scad
  * @license CC-BY-NC-4.0
  */
 module sinusoid(width, height, length, count = 1, increment = 0.25)
