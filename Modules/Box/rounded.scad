@@ -5,15 +5,52 @@
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Modules/Box/rounded.scad
  * @license CC-BY-NC-4.0
  */
+ //----------------------------------------------------------
+/**
+ * Genera las coordenadas para dibujar un rectángulo con las esquinas redondeadas.
+ * Cada esquina puede tener un radio diferente.
+ *
+ * @param {Float}   width  Ancho del rectángulo.
+ * @param {Float}   height Alto del rectángulo.
+ * @param {Float[]} radius Radios a usar para redondear cada esquina.
+ */
+function boxRoundedRect(width, height, radius = [ 1, 1, 1, 1 ]) = let(
+        _r = radius[0] == undef
+            ? [ radius, radius, radius, radius ] 
+            : radius
+    )
+    [
+        [
+            [         _r[0],              0 ],
+            [         _r[0],          _r[0] ],
+            [             0,          _r[0] ],
+            [             0, height - _r[1] ],
+            [         _r[1], height - _r[1] ],
+            [         _r[1], height         ],
+            [ width - _r[2], height         ],
+            [ width - _r[2], height - _r[2] ],
+            [ width        , height - _r[2] ],
+            [ width        ,          _r[3] ],
+            [ width - _r[3],          _r[3] ],
+            [ width - _r[3],              0 ]
+        ],
+        [
+            [         _r[0],          _r[0] ],        
+            [         _r[1], height - _r[1] ],
+            [ width - _r[2], height - _r[2] ],
+            [ width - _r[3],          _r[3] ],
+        ]
+    ];
+//----------------------------------------------------------
 /**
  * Dibuja un bloque con los bordes XY redondeados.
  *
- * @param width  Ancho del bloque (eje X).
- * @param height Largo del bloque (eje Y).
- * @param length Alto del bloque (eje Z).
- * @param radius Radios del borde de cada esquina.
+ * @param {Float}         width  Ancho del bloque (eje X).
+ * @param {Float}         height Largo del bloque (eje Y).
+ * @param {Float}         length Alto del bloque (eje Z).
+ * @param {Float|Float[]} radius Radios del borde de cada esquina.
  */
-module boxRounded(width, height, length, radius = [1,1,1,1])
+module boxRounded(width, height, length, radius = [ 1, 1, 1, 1 ])
 {
     if (radius)
     {
@@ -21,36 +58,17 @@ module boxRounded(width, height, length, radius = [1,1,1,1])
         _radius = radius != undef && len(radius) == undef
             ? [ radius, radius, radius, radius ]
             : radius;
-        translate([ 0, 0, - length / 2 ])
+        linear_extrude(length)
         {
-            linear_extrude(length)
+            _data = boxRoundedRect(width, height, _radius);
+            polygon(points = _data[0]);
+            for (_index = [ 0 : 3 ])
             {
-                hull()
+                if (_radius[_index] > 0)
                 {
-                    for (_y = [ -1, 1 ])
+                    translate(_data[1][_index])
                     {
-                        for (_x = [ -1, 1 ])
-                        {
-                            _r = min(
-                                _radius[(_y > 0 ? 2 : 0) + (_x > 0 ? 1 : 0)],
-                                width / 2,
-                                height / 2
-                            );
-                            translate([
-                                _x * (width  / 2 - _r),
-                                _y * (height / 2 - _r)
-                            ])
-                            {
-                                if (_r)
-                                {
-                                    circle(r = _r, center = true, $fn = 100);
-                                }
-                                else
-                                {
-                                    square(0.01, center = true);
-                                }
-                            }
-                        }
+                        circle(r = _radius[_index]);
                     }
                 }
             }

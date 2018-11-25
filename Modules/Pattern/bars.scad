@@ -20,7 +20,7 @@ module bars(length, width, height, thickness, sep = 0, rounded = true)
             ? _n - 1
             : _n;
     _sep = sep > 0 ? sep : (length - _count * height) / (_count + 1);
-    _w = rounded ? width - height : width;
+    _w = rounded ? abs(width - height) : width;
     _y0 = height / 2 + (length - _count * (_sep + height) + _sep) / 2;
     for (_y = [ 0 : _count - 1 ])
     {
