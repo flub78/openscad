@@ -60,7 +60,7 @@ module boxStorage(width, height, length, radius, thickness, rows, cols)
         }
         difference()
         {
-            boxRounded(width, height, length, abs(radius));
+            boxRounded(width, height, length, abs(radius) + thickness);
             translate([ (thickness - width) / 2, (thickness - height) / 2, thickness ])
             {
                 for (y = [ 1 : _numCols ])
@@ -89,10 +89,10 @@ module boxStorage(width, height, length, radius, thickness, rows, cols)
                                 length,
                                 radius > 0
                                     ? [
-                                        x == 1        && y == 1        ? radius : 0,
-                                        x == _numRows && y == 1        ? radius : 0,
                                         x == 1        && y == _numCols ? radius : 0,
-                                        x == _numRows && y == _numCols ? radius : 0
+                                        x == _numRows && y == _numCols ? radius : 0,
+                                        x == _numRows && y == 1        ? radius : 0,
+                                        x == 1        && y == 1        ? radius : 0,
                                     ]
                                     : radius < 0
                                         ? -radius

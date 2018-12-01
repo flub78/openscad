@@ -21,24 +21,24 @@ function boxRoundedRect(width, height, radius = [ 1, 1, 1, 1 ]) = let(
     )
     [
         [
-            [         _r[0],              0 ],
-            [         _r[0],          _r[0] ],
-            [             0,          _r[0] ],
-            [             0, height - _r[1] ],
-            [         _r[1], height - _r[1] ],
-            [         _r[1], height         ],
-            [ width - _r[2], height         ],
-            [ width - _r[2], height - _r[2] ],
-            [ width        , height - _r[2] ],
-            [ width        ,          _r[3] ],
-            [ width - _r[3],          _r[3] ],
-            [ width - _r[3],              0 ]
+            [             0, height - _r[0] ],
+            [         _r[0], height - _r[0] ],
+            [         _r[0], height         ],
+            [ width - _r[1], height         ],
+            [ width - _r[1], height - _r[1] ],
+            [ width        , height - _r[1] ],
+            [ width        ,          _r[2] ],
+            [ width - _r[2],          _r[2] ],
+            [ width - _r[2],              0 ],
+            [         _r[3],              0 ],
+            [         _r[3],          _r[3] ],
+            [             0,          _r[3] ]
         ],
         [
-            [         _r[0],          _r[0] ],        
-            [         _r[1], height - _r[1] ],
-            [ width - _r[2], height - _r[2] ],
-            [ width - _r[3],          _r[3] ],
+            [         _r[0], height - _r[0] ],
+            [ width - _r[1], height - _r[1] ],
+            [ width - _r[2],          _r[2] ],
+            [         _r[3],          _r[3] ]
         ]
     ];
 //----------------------------------------------------------
@@ -58,17 +58,20 @@ module boxRounded(width, height, length, radius = [ 1, 1, 1, 1 ])
         _radius = radius != undef && len(radius) == undef
             ? [ radius, radius, radius, radius ]
             : radius;
-        linear_extrude(length)
+        _data = boxRoundedRect(width, height, _radius);
+        translate([ - width / 2, - height / 2, - length / 2 ])
         {
-            _data = boxRoundedRect(width, height, _radius);
-            polygon(points = _data[0]);
-            for (_index = [ 0 : 3 ])
+            linear_extrude(length)
             {
-                if (_radius[_index] > 0)
+                polygon(points = _data[0]);
+                for (_index = [ 0 : 3 ])
                 {
-                    translate(_data[1][_index])
+                    if (_radius[_index] > 0)
                     {
-                        circle(r = _radius[_index]);
+                        translate(_data[1][_index])
+                        {
+                            circle(r = _radius[_index]);
+                        }
                     }
                 }
             }
