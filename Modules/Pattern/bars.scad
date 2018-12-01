@@ -1,6 +1,7 @@
  /**
  * Dibuja unas barras de manera repetida hasta completar la longitud.
  *
+ * @param {Float}   length    Longitud del área a dibujar (eje X).
  * @param {Float}   width     Ancho de cada barra (eje X).
  * @param {Float}   height    Alto de cada barra (eje Y).
  * @param {Float}   thickness Grosor de las barras (eje Z).

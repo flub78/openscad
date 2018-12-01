@@ -9,9 +9,9 @@
 /**
  * Dibuja un panal de miel completo.
  *
- * @param {Integer} columns   Número de columnas (Eje X).
- * @param {Integer} rows      Número de filas (Eje Y).
- * @param {Float}   height    Altura del cubo (Eje Z).
+ * @param {Integer} columns   Número de columnas (eje X).
+ * @param {Integer} rows      Número de filas (eje Y).
+ * @param {Float}   height    Altura del cubo (eje Z).
  * @param {Float}   size      Tamaño del hexágono.
  * @param {Float}   thickness Grosor de las paredes del panal.
  * @param {Boolean} odd       Si es true las filas impares tienen una columna menos.
@@ -25,11 +25,11 @@ module honeycomb(columns, rows, height, size, thickness, odd = false)
             ? columns - 2
             : columns - 1
     ];
-    for (_row = [ 0 : rows - 1 ]) 
+    for (_row = [ 0 : rows - 1 ])
     {
         translate([ (_row % 2) * _halfSize, _row * _halfSize * sqrt(3), 0 ])
         {
-            for (_column = [ 0 : _last[_row % 2] ]) 
+            for (_column = [ 0 : _last[_row % 2] ])
             {
                 translate([ _column * size, 0, 0 ])
                 {
@@ -82,9 +82,9 @@ module honeycombCube(width, height, length, size, thickness)
 /**
  * Dibuja un panal acotado por un cubo hueco dadas las columnas y filas requeridas.
  *
- * @param {Integer} columns   Número de columnas (Eje X).
- * @param {Integer} rows      Número de filas (Eje Y).
- * @param {Float}   height    Altura del cubo (Eje Z).
+ * @param {Integer} columns   Número de columnas (eje X).
+ * @param {Integer} rows      Número de filas (eje Y).
+ * @param {Float}   height    Altura del cubo (eje Z).
  * @param {Float}   size      Tamaño del hexágono.
  * @param {Float}   thickness Grosor de las paredes del panal.
  */
@@ -92,10 +92,10 @@ module honeycombCubeByColsAndRows(columns, rows, height, size, thickness)
 {
     _width  = (columns - 1) * size;
     _length = (rows    - 1) * size * sqrt(3) / 2;
-    difference() 
+    difference()
     {
         cube([ _width + thickness, _length + thickness, height ]);
-        intersection() 
+        intersection()
         {
             translate([ thickness, thickness, 0 ])
             {
@@ -123,7 +123,7 @@ module honeycombIntersection(width, height, length, size, thickness)
     _rows   = floor(2 * height / (size * sqrt(3))) + 3;
     _width  = _cols * size;
     _height = (_rows - 1) * size * sqrt(3) / 2;
-    intersection() 
+    intersection()
     {
         children();
         translate([ - _width / 2, - _height / 2 - (size - thickness) / sqrt(3), - length / 2 ])
