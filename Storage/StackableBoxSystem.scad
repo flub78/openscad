@@ -1,5 +1,5 @@
 /**
- * Módulo para dibujar contenedores apilables.
+ * Módulo para dibujar bandejas apilables.
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Storage/StackableBoxSystem.scad
@@ -8,15 +8,16 @@
  */
 //-----------------------------------------------------------------------------
 sizes = [
- // ancho largo alto radio dz
- [  58.0, 40.0, 25.0, 6.5, [ 0.6, 0.4 ] ], // Tupper blanco
- [ 109.0, 59.1, 34.0, 2.5 ], // Gavetero plástico
- [  35.0, 16.5, 67.7, 3.5 ]  // SMINT
+ //ancho  largo   alto  radio  dz
+ [  58.0,  40.0,  25.0,   6.5, [ 0.6, 0.4 ] ], // Tupper blanco
+ [ 109.0,  59.1,  34.0,   1.8               ], // Gavetero plástico
+ [  35.0,  16.5,  67.7,   3.5               ], // SMINT
+ [  68.0,  53.0, 102.0,   0.6               ]
 ];
 // Índice de las medidas a usar del array `sizes`.
-selected = 0;
+selected = 1;
 // Grosor de las paredes.
-thickness = 1.2;
+thickness = 0.9;
 // Tolerancia a usar para que el pin entre en las ranuras.
 tolerance = 1.2;
 // Configuración de las celdas de cada caja.
@@ -24,8 +25,8 @@ tolerance = 1.2;
 // 0: Divisiones en el eje X.
 // 1: Divisiones en el eje Y.
 cells = [
-    [ 1, 2 ],
-    [ 1, 2 ],
+    [ 3, 2 ],
+    [ 2, 2 ]
 ];
 // Índice del elemento que se quiere mostrar o -1 para mostrar todos.
 // Es útil para cuando se quiere imprimir solamente una parte.
@@ -59,6 +60,12 @@ heights = config[4] == undef
     : config[4];
 // Ancho del pin a usar para poder levantar todas las cajas.
 pinSize = width / 6;
+// Permite mostrar una rebanada para verificar si el bandeja encaja
+// en el contenedor.
+// <0: Dibuja una rebanada empezando desde la base.
+// =0: No dibuja ninguna rebanada.
+// >0: Dibuja una rebanada empezando desde arriba.
+slice = 0;
 //-----------------------------------------------------------------------------
 /**
  * Devuelve la posición de la bandeja actual.
@@ -250,11 +257,7 @@ colors   = [
     [ 0.0, 0.5, 0.0 ],
     [ 0.0, 0.0, 0.5 ],
 ];
-if (0)
-{
-    drawTestBox(thickness);
-}
-else
+difference()
 {
     pinHeight = thickness * 3 + 2 * tolerance;
     vertical  = 0; // Vertical solamente funciona para cajas de la misma altura.
@@ -288,6 +291,13 @@ else
                     }
                 }
             }
+        }
+    }
+    if (slice)
+    {
+        translate([ - width / 2, - length / 2, - slice ])
+        {
+            cube([ width, length, height ]);
         }
     }
 }
