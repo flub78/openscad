@@ -8,6 +8,19 @@
  */
 //-----------------------------------------------------------------------------
 /**
+ * Devuelve el listado de puntos necesarios para unir mediante un arco los
+ * ángulos inicial y final.
+ *
+ * @param {Float} from   Ángulo inicial.
+ * @param {Float} to     Ángulo final.
+ * @param {Float} radius Radio del arco.
+ *
+ * @return {Float[][]}
+ */
+function arcPoints(from = 0, to = 360, radius = 1) = let(_step = (to - from) / ($fn ? $fn : 10)) [
+    for(_angle = [ from : _step : to + _step / 10 ]) [ cos(_angle), sin(_angle) ] * radius
+];
+/**
  * Dibuja un arco entre dos ángulos.
  *
  * @param {Float} from      Ángulo inicial.
@@ -18,16 +31,11 @@
 module arc(from = 0, to = 360, radius = 1, thickness = 0.1) {
     _outer = radius + thickness / 2;
     _inner = radius - thickness / 2;
-    _from  = min(from, to);
-    _to    = max(from, to);
-    _step  = (_to - _from) / ($fn ? $fn : 10);
     polygon(
-        points = [
-            for(_angle = [ _from :  _step : _to   ])
-                [ cos(_angle), sin(_angle) ] * _outer,
-            for(_angle = [ _to   : -_step : _from ])
-                [ cos(_angle), sin(_angle) ] * _inner
-        ]
+        points = concat(
+            arcPoints(from, to,   _outer),
+            arcPoints(to,   from, _inner)
+        )
     );
 }
 /**
@@ -38,9 +46,9 @@ module arc(from = 0, to = 360, radius = 1, thickness = 0.1) {
  * @param {Float}   thickness Grosor de cada arco.
  * @param {Float[]} angles    Valor de los ángulos inicial y final de cada arco.
  * @param {Float}   delta     Valor para el incremento del radio.
- *                          Si no se especifica se usa el mismo valor que el radio inicial.
+ *                            Si no se especifica se usa el mismo valor que el radio inicial.
  */
-module arcs(from, to, thickness, angles = [ 0, 360 ], delta = 0)
+module arcs(from, to, thickness = 0.1, angles = [ 0, 360 ], delta = 0)
 {
     if (from > 0)
     {
