@@ -12,20 +12,20 @@
  */
 module propeller(diameter, height, thickness = 1.2, angles = [ 0, 60, 120, 180, 240, 300 ])
 {
-    // Dibujamos las palas
-    for (angle = angles)
+    linear_extrude(height)
     {
-        rotate([0, 0, angle])
+        // Dibujamos las palas
+        for (angle = angles)
         {
-            translate([ - thickness / 2, 0, 0 ])
+            rotate(angle)
             {
-                cube([ thickness, diameter / 2, height ]);
+                translate([ - thickness / 2, 0 ])
+                {
+                    square([ thickness, diameter / 2 ]);
+                }
             }
         }
-    }
-    // Redondeado de la unión.
-    translate([ 0, 0, height / 2 ])
-    {
-        cylinder(d = thickness, h = height, center = true);
+        // Redondeado de la unión.
+        circle(d = thickness);
     }
 }

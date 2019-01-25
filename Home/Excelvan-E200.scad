@@ -3,7 +3,7 @@
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Home/Excelvan-E200.scad
- * @see     http://www.thingiverse.com/thing:
+ * @see     http://www.thingiverse.com/thing:3324983
  * @license CC-BY-NC-4.0
  */
 tolerance = 2;               // Tolerancia de las medidas.
