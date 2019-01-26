@@ -16,7 +16,7 @@
  */
 function boxRoundedRect(width, height, radius = [ 1, 1, 1, 1 ]) = let(
         _r = radius[0] == undef
-            ? [ radius, radius, radius, radius ] 
+            ? [ radius, radius, radius, radius ]
             : radius
     )
     [
@@ -54,26 +54,11 @@ module boxRounded(width, height, length, radius = [ 1, 1, 1, 1 ])
 {
     if (radius)
     {
-        // Si se pasa un número, lo convertimos a un array.
-        _radius = radius != undef && len(radius) == undef
-            ? [ radius, radius, radius, radius ]
-            : radius;
-        _data = boxRoundedRect(width, height, _radius);
         translate([ - width / 2, - height / 2, - length / 2 ])
         {
             linear_extrude(length)
             {
-                polygon(points = _data[0]);
-                for (_index = [ 0 : 3 ])
-                {
-                    if (_radius[_index] > 0)
-                    {
-                        translate(_data[1][_index])
-                        {
-                            circle(r = _radius[_index]);
-                        }
-                    }
-                }
+                boxRounded2d(width, height, radius);
             }
         }
     }
@@ -82,6 +67,34 @@ module boxRounded(width, height, length, radius = [ 1, 1, 1, 1 ])
         cube([ width, height, length ], center = true);
     }
 }
+//----------------------------------------------------------
+/**
+ * Dibuja un bloque con los bordes XY redondeados.
+ *
+ * @param {Float}         width  Ancho del bloque (eje X).
+ * @param {Float}         height Largo del bloque (eje Y).
+ * @param {Float|Float[]} radius Radios del borde de cada esquina.
+ */
+module boxRounded2d(width, height, radius = [ 1, 1, 1, 1 ])
+{
+    // Si se pasa un número, lo convertimos a un array.
+    _radius = radius != undef && len(radius) == undef
+        ? [ radius, radius, radius, radius ]
+        : radius;
+    _data = boxRoundedRect(width, height, _radius);
+    polygon(points = _data[0]);
+    for (_index = [ 0 : 3 ])
+    {
+        if (_radius[_index] > 0)
+        {
+            translate(_data[1][_index])
+            {
+                circle(r = _radius[_index]);
+            }
+        }
+    }
+}
+//----------------------------------------------------------
 /**
  * Dibuja un bloque con todos los bordes redondeados.
  *

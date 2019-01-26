@@ -7,21 +7,15 @@
  * @license CC-BY-NC-4.0
  */
 //--------------------------------------------------------------------------
-use <../../Functions/Array/sum.scad>
 use <../../Functions/Array/fill.scad>
+use <../../Functions/Array/sum.scad>
+use <../../Functions/Array/toArray.scad>
 use <../../Functions/Utils/message.scad>
 use <./rounded.scad>
 //--------------------------------------------------------------------------
 function calcTranslation(side, percents, index, thickness) = thickness
       + arraySum(percents, index - 1) * side
       + percents[index] * side / 2;
-
-function toArray(value) = value[0] == undef
-    ? value == 0
-        ? []
-        : arrayFill(value, 1 / value)
-    : value;
-  
 //--------------------------------------------------------------------------
 /**
  * Dibujar un bloque con huecos.

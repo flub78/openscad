@@ -28,7 +28,8 @@ function arcPoints(from = 0, to = 360, radius = 1) = let(_step = (to - from) / (
  * @param {Float} radius    Radio del arco.
  * @param {Float} thickness Grosor del arco.
  */
-module arc(from = 0, to = 360, radius = 1, thickness = 0.1) {
+module arc(from = 0, to = 360, radius = 1, thickness = 0.1)
+{
     _outer = radius + thickness / 2;
     _inner = radius - thickness / 2;
     polygon(
