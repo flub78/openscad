@@ -6,6 +6,8 @@
  * @license CC-BY-NC-4.0
  */
  //----------------------------------------------------------
+ use <../../Functions/is.scad>
+ //----------------------------------------------------------
 /**
  * Genera las coordenadas para dibujar un rectángulo con las esquinas redondeadas.
  * Cada esquina puede tener un radio diferente.
@@ -78,9 +80,9 @@ module boxRounded(width, height, length, radius = [ 1, 1, 1, 1 ])
 module boxRounded2d(width, height, radius = [ 1, 1, 1, 1 ])
 {
     // Si se pasa un número, lo convertimos a un array.
-    _radius = radius != undef && len(radius) == undef
-        ? [ radius, radius, radius, radius ]
-        : radius;
+    _radius = isArray(radius)
+        ? radius
+        : [ radius, radius, radius, radius ];
     _data = boxRoundedRect(width, height, _radius);
     polygon(points = _data[0]);
     for (_index = [ 0 : 3 ])
