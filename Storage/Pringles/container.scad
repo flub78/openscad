@@ -255,29 +255,33 @@ module rect(length = LENGTH, plength = 9.5, width = 7.5, height = 6.9, thickness
  *
  * @param {String} string Texto a imprimir.
  * @param {Float}  size   Tamaño de la fuente.
+ * @param {String} valign Alineación vertical de las letras.
  * @param {Float}  z      Coordenada Z de la posición del texto.
  */
-module title(string, size = 12, z = LENGTH - LID_HEIGHT)
+module title(string, size = 12, valign = "bottom", z = LENGTH - LID_HEIGHT - 3 * THICKNESS)
 {
+    _len    = len(string);
     _rad    = 3.1415927 / 180;
     _radius = OUTER / 2;
     _step   = size / _radius;
-    for(_i = [ 0 : len(string) ])
+    rotate([ 0, 0, - 0.5 * _step * _len / _rad ])
     {
-        rotate(_i * _step / _rad)
+        for(_i = [ 0 : _len ])
         {
-            translate([0, _radius - THICKNESS, z - size ])
+            rotate(_i * _step / _rad)
             {
-                rotate([90, 0, 180])
+                translate([0, _radius - THICKNESS, z - size ])
                 {
-                    linear_extrude(THICKNESS)
+                    rotate([90, 0, 180])
                     {
-                        text(
-                            string[_i],
-                            halign = "center",
-                            size   = size,
-                            valign = "center"
-                        );
+                        linear_extrude(THICKNESS)
+                        {
+                            text(
+                                string[_i],
+                                size   = size,
+                                valign = valign
+                            );
+                        }
                     }
                 }
             }
