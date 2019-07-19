@@ -12,7 +12,7 @@
  */
 module propeller(diameter, height, thickness = 1.2, angles = [ 0, 60, 120, 180, 240, 300 ])
 {
-    linear_extrude(height)
+    linear_extrude(height, convexity = 10)
     {
         // Dibujamos las palas
         for (angle = angles)

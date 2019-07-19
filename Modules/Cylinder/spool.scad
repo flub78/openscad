@@ -16,6 +16,7 @@ use <../Shapes/propeller.scad>
  */
 module spool(diameter, height, thickness, rod, angles = [])
 {
+    _e = is_undef(epsilon) ? ($preview ? 0.001 : 0) : epsilon;
     difference()
     {
         union()
@@ -25,9 +26,9 @@ module spool(diameter, height, thickness, rod, angles = [])
         }
         if (rod)
         {
-            translate([ 0, 0, height / 2 ])
+            translate([ 0, 0, height / 2 - _e / 2 ])
             {
-                cylinder(d = rod, h = height, center = true);
+                cylinder(d = rod, h = height + _e, center = true);
             }
         }
     }

@@ -19,11 +19,15 @@ module cylinderHollow(diameter, height, thickness = 1, angles = [])
     {
         difference()
         {
+            _e = is_undef(epsilon) ? ($preview ? 0.001 : 0) : epsilon;
             cylinder(d = diameter, h = height);
-            cylinder(d = diameter - thickness * 2, h = height);
-            if (angles)
+            translate([ 0, 0, - _e / 2 ])
             {
-                propeller(diameter, height, thickness, angles);
+                cylinder(d = diameter - thickness * 2, h = height + _e);
+                if (angles)
+                {
+                    propeller(diameter, height + _e, thickness, angles);
+                }
             }
         }
     }
