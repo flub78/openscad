@@ -1,5 +1,5 @@
 /**
- * Devuelve la suma de un array desde el primer elemento 
+ * Devuelve la suma de un array desde el primer elemento
  * hasta el índice especificado.
  * Si el índice no existe pero es mayor a 0, el resultado es
  * la suma de los valores anteriores.
@@ -22,8 +22,8 @@
  * @license CC-BY-NC-4.0
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Functions/Array/sum.scad
  */
-function arraySum(array, index, total = 0) = array[index] == undef
+function arraySum(array, index = 0, total = 0) = array[index] == undef
     ? index <= 0
-        ? total + 0
+        ? total
         : arraySum(array, index - 1, total)
     : arraySum(array, index - 1, total + array[index]);
