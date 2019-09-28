@@ -25,7 +25,7 @@ module bits(diameter = 1/4, length = 1, type = "rect", plength = 0, tolerance = 
     _d  = _mm * diameter;
     _l  = _mm * length;
     _h  = tolerance + _d;
-    _w  = tolerance + _d * 1.125;
+    _w  = tolerance + _d / cos(30);
     _pl = plength ? plength : _l / 4;
     if (type == "conc")
     {

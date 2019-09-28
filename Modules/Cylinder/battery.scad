@@ -107,7 +107,7 @@ batteries = [
  * @return {Array|undef}
  */
 function getBattery(name) = let(_index = search([ name ], batteries, 1, 0))
-    _index[0] ? batteries[_index[0]] : undef;
+    _index ? batteries[_index[0]] : undef;
 
 
 /**

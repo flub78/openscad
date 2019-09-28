@@ -270,9 +270,9 @@ module title(string, size = 12, valign = "bottom", z = LENGTH - LID_HEIGHT - 3 *
         {
             rotate(_i * _step / _rad)
             {
-                translate([0, _radius - THICKNESS, z - size ])
+                translate([0, _radius - THICKNESS / 2, z - size ])
                 {
-                    rotate([90, 0, 180])
+                    rotate([90, 0, 185])
                     {
                         linear_extrude(THICKNESS)
                         {

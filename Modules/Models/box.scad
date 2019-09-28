@@ -18,6 +18,7 @@
  */
 module modelBox(width, height, length, thickness, screw = 0, slot = 0, side = [], bottom = [])
 {
+    _eps = $preview ? 0.01 : 0;
     cube([ width, height, length ]);
     // Agujeros laterales
     for (_side = side)
@@ -32,7 +33,7 @@ module modelBox(width, height, length, thickness, screw = 0, slot = 0, side = []
                     {
                         rotate([ 0, 90, 0 ])
                         {
-                            cylinder(d = screw, h = width + thickness * 2, center = true);
+                            cylinder(d = screw, h = 2 * width, center = true);
                         }
                     }
                 }
@@ -44,7 +45,7 @@ module modelBox(width, height, length, thickness, screw = 0, slot = 0, side = []
             {
                 rotate([ 0, 90, 0 ])
                 {
-                    cylinder(d = screw, h = width + thickness * 2, center = true);
+                    cylinder(d = screw, h = 2 * width, center = true);
                 }
             }
         }
@@ -58,11 +59,11 @@ module modelBox(width, height, length, thickness, screw = 0, slot = 0, side = []
             {
                 for (_n = [ - slot / 2, slot / 2 ])
                 {
-                    translate([ width - _bottom[0], 0, _bottom[1] + _n ])
+                    translate([ width - _bottom[0], _eps, _bottom[1] + _n ])
                     {
                         rotate([ 90, 0, 0 ])
                         {
-                            cylinder(d = screw, h = thickness);
+                            cylinder(d = screw, h = thickness + 2 * _eps);
                         }
                     }
                 }
@@ -70,11 +71,11 @@ module modelBox(width, height, length, thickness, screw = 0, slot = 0, side = []
         }
         else
         {
-            translate([ width - _bottom[0], 0, _bottom[1] ])
+            translate([ width - _bottom[0], _eps, _bottom[1] ])
             {
                 rotate([ 90, 0, 0 ])
                 {
-                    cylinder(d = screw, h = thickness);
+                    cylinder(d = screw, h = thickness + 2 * _eps);
                 }
             }
         }

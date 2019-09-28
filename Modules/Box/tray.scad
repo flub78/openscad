@@ -25,11 +25,15 @@
  */
 module boxTray(width, height, length, thickness = 5, sides = [])
 {
+    _e = $preview ? 0.01 : 0;
     _t = 2 * thickness;
+    _h = height + _t;
+    _l = length + thickness;
+    _w = width  + _t;
     difference()
     {
-        cube([ width  + _t, height + _t, length + thickness ]);
-        translate([ thickness, thickness, 0 ])
+        cube([ _w, _h, _l ], center = true);
+        translate([ thickness, thickness, thickness / 2 - _e ])
         {
             if ($children)
             {
@@ -37,38 +41,31 @@ module boxTray(width, height, length, thickness = 5, sides = [])
             }
             else
             {
-                cube([ width, height, length ]);
+                cube([ width, height, length ], center = true);
             }
         }
         for (_s = sides)
         {
             if (_s == "a")
             {
-                translate([ 0, 0, length ])
+                // Tapa trasera
+                translate([ 0, 0, _l / 2 - _e ])
                 {
-                    cube([ width  + _t, height + _t, _t ]);
+                    cube([ _w + _e, _h + _e, _t + _e ], center = true);
                 }
             }
-            else if (_s == "b")
+            else if (_s == "l" || _s == "r")
             {
-                cube([ width  + _t, thickness, length + _t ]);
-            }
-            else if (_s == "l")
-            {
-                translate([ width + thickness, 0, 0 ])
+                translate([ (_s == "l" ? 1 : -1) * (width + thickness) / 2, 0, 0 ])
                 {
-                    cube([ thickness, height + _t, length + _t ]);
+                    cube([ thickness + _e, height + 2 * _t, length + 2 * _t ], center = true);
                 }
             }
-            else if (_s == "r")
+            else if (_s == "b" || _s == "t")
             {
-                cube([ thickness, height + _t, length + _t ]);
-            }
-            else if (_s == "t")
-            {
-                translate([ 0, height + thickness, 0 ])
+                translate([ 0, (_s == "b" ? -1 : 1) * (height / 2 + thickness - _e), 0 ])
                 {
-                    cube([ width  + _t, thickness, length + _t ]);
+                    cube([ width + 2 * _t, _t, length + 2 * _t ], center = true);
                 }
             }
         }
