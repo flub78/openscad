@@ -9,7 +9,7 @@
  * @see     https://www.thingiverse.com/thing:3103813
  */
 //------------------------------------
-use <../Modules/pinTab.scad>
+use <../../Modules/pinTab.scad>
 //------------------------------------
 $fn = 250;
 pinTab(
