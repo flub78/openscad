@@ -1,8 +1,8 @@
 /**
- * Dibuja una caja para guardar brocas.
- * Modificando los valores de la variable `sizes` se puede incluso
- * usar para guardar otros tipos de elementos tales como lápices,
- * bolígrafos, pinceles, etc..
+ * Draw a box to store bits.
+ * By changing the values ​​of the variable `sizes` you can even
+ * use to store other types of items such as pencils,
+ * pens, brushes, etc.
  *
  * @author  Joaquín Fernández
  * @url     https://gitlab.com/joaquinfq/openscad/blob/master/Storage/DrillHolder.scad
@@ -13,26 +13,28 @@ use <../Functions/Array/flatten.scad>
 use <../Functions/Math/ceilMultiple.scad>
 use <../Modules/Box/hollow.scad>
 //-----------------------------------------------------------------------
-// Valores personalizables
+// Customizable values
 //-----------------------------------------------------------------------
-// Valor del "layer height"
-// El grosor de las paredes se calcula en función a este valor.
+// Value of the "layer height"
+// The thickness of the walls is calculated based on this value.
 lh = 0.3;
-// Indica si se agrega la muesca para sacar las brocas más fácilmente.
+// Indicates whether the notch is added to remove the drill bits more easily.
 cut = true;
-// Indica si se muestra la tapa o la caja.
+// Indicates whether the lid or box is shown.
 showBox = 1;
-// Dimensiones de las brocas: [0]: Diámetro, [1]: Largo
-// Si se quiere holgura, tomar en cuenta a la hora de asignar los valores.
-// Se pueden poner en cualquier orden pero si se ponen de mayor a menor
-// se aprovecha el espacio que queda para guardar tornillos, puntas, etc.
+// Drill dimensions: [0]: Diameter, [1]: Length
+// If slack is desired, take into account when assigning the values.
+// They can be put in any order but if they are placed from highest to lowest
+// use the space left to store screws, tips, etc.
 sizes = [
-    [ 10, 133 ],
-    [  8, 117 ],
-    [  6,  93 ],
-    [  5,  86 ],
-    [  4,  74 ],
-    [  3,  61 ]
+   [ 10, 133 ],
+    [ 9.5, 126 ],
+    [ 9, 126 ],
+    [  8.5, 118 ],
+    [ 8, 116 ],
+    [  7.5, 113 ],
+    [ 7, 110 ],
+    [  6.5, 101 ]
 ];
 //-----------------------------------------------------------------------
 // Fin de la personalización.

@@ -9,13 +9,13 @@ space = 1.0;     // space between drills
 wall = 1.5;
 
 bds = [
-   [ 10, 133 ],
-    [ 9.5, 126 ],
-    [ 9, 126 ],
-    [  8.5, 118 ],
-    [ 8, 116 ],
+	[ 7, 110],
     [ 7.5, 113 ],
-	[ 7, 110]
+    [ 8, 116 ],
+    [  8.5, 118 ],
+    [ 9, 126 ],
+    [ 9.5, 126 ],
+	[ 10, 133 ],
 ];
 
 sds = [
@@ -31,6 +31,27 @@ sds = [
 	[ 5.5, 93],
 	[ 6, 93],
 	[ 6.5, 101 ]
+];
+all = [
+    [ 1, 33 ],
+    [ 1.5, 38 ],
+    [ 2, 48 ],
+    [ 2.5, 56 ],
+    [ 3, 60 ],
+    [ 3.5, 70 ],
+    [ 4, 74 ],
+    [ 4.5, 80],
+	[ 5, 85 ],
+	[ 5.5, 93],
+	[ 6, 93],
+	[ 6.5, 101 ],
+	[ 7, 110],
+    [ 7.5, 113 ],
+    [ 8, 116 ],
+    [  8.5, 118 ],
+    [ 9, 126 ],
+    [ 9.5, 126 ],
+	[ 10, 133 ],
 ];
 
 /*
@@ -106,7 +127,7 @@ module top (dr) {
 	ext_width = width + 2 * (wall + slack);
 	ext_height = height + wall + slack;
 	
-	difference() {
+	# difference() {
 		color("green")
 		translate ([- (wall + slack), - (wall + slack), wall])
 		cube ([ext_len, ext_width, ext_height]);
@@ -114,7 +135,18 @@ module top (dr) {
 		translate ([-slack / 2, -slack / 2, 0])
 		cube([length + slack, width + slack, height]);
 	}
+	
+	// holes
+	for (i = [0: len -1]) {
+		// echo ("translate: ",wall + sigma(dr, i) - dr[i][0] / 2 + space * i);
+		// translate ([wall + sigma(dr, i) - dr[i][0] / 2 + space * i, width/2, wall + height - (height - dr[i][1]) + slack])
+		translate ([wall + sigma(dr, i) - dr[i][0] / 2 + space * i, 
+			width/2, 
+			wall + height - (height - dr[i][1]) + slack - dr[i][1]/ 2 + height / 2])
+		cube([dr[i][0] + space, width + slack, height - dr[i][1]], center=true);
+		// cylinder(height - dr[i][1], d= dr[i][0] + slack);
+	}
 }
 
-box(sds);
-# top (sds);
+//box(all);
+top (all);
