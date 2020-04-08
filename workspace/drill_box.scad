@@ -110,8 +110,10 @@ module box (dr) {
 	}
 	
 	// The base
-	translate([-(wall + slack), -(wall + slack), 0])
-		cube([length + 2 * (wall + slack), width + 2 * (wall + slack), wall]);
+	base_width = 2 * wall;
+	base_height = 2 * wall;
+	translate([-(base_width + slack), -(base_width + slack), 0])
+		cube([length + 2 * (base_width + slack), width + 2 * (base_width + slack), base_height]);
 }
 
 /**
@@ -127,7 +129,7 @@ module top (dr) {
 	ext_width = width + 2 * (wall + slack);
 	ext_height = height + wall + slack;
 	
-	# difference() {
+	difference() {
 		color("green")
 		translate ([- (wall + slack), - (wall + slack), wall])
 		cube ([ext_len, ext_width, ext_height]);
@@ -148,5 +150,31 @@ module top (dr) {
 	}
 }
 
-//box(all);
-top (all);
+/**
+ * a top easier to open
+ */
+module top_plus (dr) {
+	
+	len = len(dr); 
+	length = sigma(dr, len - 1) + wall * 2 + space * len;
+	width = max_dia(dr, len - 1) + 2 * wall;
+	height = 25;
+	height = max_len(dr, len - 1);
+	
+	difference () {
+		top(dr);
+		
+		// cut half cylinder
+		translate([length / 2, 0, 0])
+		rotate([90, 0, 0])
+		cylinder(h = width * 4, d = 30, center = true);
+		
+		// cut off the corner
+		translate([0,0, height])
+		rotate([0, -45, 0])
+		cube([length * 2, width * 4, 40], center=true);
+	}
+}
+
+box(all);
+color("yellow", alpha = 0.6) top_plus (all);
