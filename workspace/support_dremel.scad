@@ -1,6 +1,8 @@
 /*
  * Support Dremel
  */
+
+use <MCAD/3d_triangle.scad>
  
 $fn = 36;
 entraxe_bottom = 20;
@@ -10,7 +12,7 @@ entraxe_vertical = 74.5;
 slack = 0.5;
 height = 26;
 hole_dia = 3;
-thickness = 3;
+thickness = 1;
 width_top = entraxe_top + 20;
 width_bottom = entraxe_bottom + 20;
 round = 4;
@@ -41,10 +43,10 @@ module two_holes_plate (size = [1, 2, 3], rounding = 1, center = false, distance
 		y_translation = (center) ? 0 : size[1] / 2;
 		z_translation = (center) ? size[2] / 2  : - thickness / 2;
 		
-		translate([(x_trans - distance) / 2, y_translation, z_translation])
+		translate([x_trans / 2 - distance, y_translation, z_translation])
 		cylinder(h = thickness * 2, d = hole_dia, center = center);
 
-		translate([(x_trans + distance) / 2, y_translation, z_translation])
+		translate([x_trans / 2 + distance, y_translation, z_translation])
 		cylinder(h = thickness * 2, d = hole_dia, center = center);
 	}
 }
@@ -63,4 +65,12 @@ module hache () {
 	square(size = [height, len], center = true);
 }
 
-hache();
+difference () {
+	hache();
+	
+	translate([0, 14, -1])
+	3dtri_draw ( Acord = [0, 0, 0], Bcord = [4, 7, 0], Ccord = [-4, 7, 0], h =15) ;
+	
+	translate([0, 40, -1])
+	cube(size = [3, 40, 15], center = true);
+}
